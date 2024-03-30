@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+    
+    <nav class="navbar">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+    </nav>
+    
+    <section id="home" class="section">
+        <h2>Welcome to Our Homepage</h2>
+        <p>Thank you for visiting our website! We are dedicated to [briefly describe your organization or project's mission or purpose.</p>
+        <p>Explore our site to learn more about what we do and how you can get involved.</p>
+        <p>Feel free to browse through our various sections, including About Us, Contact Us, and more, to find out more about our organization.</p>
+    </section>
+    
+    
+    <section id="about" class="section">
+        <h2>About the Student Form</h2>
+        <p>The student form is a tool designed to collect and manage information about students in an educational institution. It serves as a convenient way to input and organize student data for various purposes, such as enrollment, academic tracking, and administrative tasks.</p>
+        <p>With the student form, administrators can easily gather essential details about students, including their personal information, academic records, and contact details. This helps streamline processes related to student management and enhances the efficiency of educational institutions.</p>
+        <p>Additionally, the student form may include features for CRUD operations (Create, Read, Update, Delete) to allow users to add new student records, view existing data, update information when necessary, and remove outdated entries.</p>
+        <p>Overall, the student form plays a crucial role in maintaining accurate and up-to-date student records, ultimately contributing to the smooth operation and effective management of educational institutions.</p>
+    </section>
+    
+    
+    <section id="contact" class="section">
+        <h2>Contact Us</h2>
+        <p>If you have any inquiries or questions, feel free to reach out to us through the following channels</p>
+        <p>We look forward to hearing from you!</p>
+    </section>
+    
+    
+    
+    <h2>Student Records</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Grade</th>
+                <th>Address</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="student-table-body">
+            <tr>
+                <td>1</td>
+                <td>Atienza Mark Angelo</td>
+                <td>2nd Year College</td>
+                <td>Cabay Tiaong Quezon</td>
+                <td class="crud-buttons">
+                    <button class="btn-create">Create</button>
+                    <button class="btn-read">Read</button>
+                    <button class="btn-update">Update</button>
+                    <button class="btn-delete">Delete</button>
+                </td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Velasco Kyle</td>
+                <td>3rs Year College</td>
+                <td>San Pablo City</td>
+                <td class="crud-buttons">
+                    <button class="btn-create">Create</button>
+                    <button class="btn-read">Read</button>
+                    <button class="btn-update">Update</button>
+                    <button class="btn-delete">Delete</button>
+                </td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Carrido Reymond</td>
+                <td>2nd Year College</td>
+                <td>San Juan Tiaong Quezon</td>
+                <td class="crud-buttons">
+                    <button class="btn-create">Create</button>
+                    <button class="btn-read">Read</button>
+                    <button class="btn-update">Update</button>
+                    <button class="btn-delete">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <script src="script.js"></script>
+    <script>
+   document.addEventListener("DOMContentLoaded", function() {
+    const table = document.querySelector("table");
+    const tbody = document.getElementById("student-table-body");
+
+    // Counter for unique IDs
+    let idCounter = 4; // Adjust this number as needed
+
+    // Create Functionality
+    document.querySelector(".btn-create").addEventListener("click", function() {
+        addNewRow();
+    });
+
+    // Delete Functionality
+    table.addEventListener("click", function(event) {
+        if (event.target.classList.contains("btn-delete")) {
+            deleteRow(event.target);
+        }
+    });
+
+    // Update Functionality
+    tbody.addEventListener("input", function(event) {
+        if (event.target.tagName === "TD") {
+            const row = event.target.parentElement;
+            const rowData = Array.from(row.cells).map(cell => cell.textContent);
+            console.log("Updated data:", rowData);
+        }
+    });
+
+    // Read Functionality
+    document.querySelectorAll(".btn-read").forEach(button => {
+        button.addEventListener("click", function(event) {
+            const row = event.target.closest("tr");
+            const rowData = Array.from(row.cells).map(cell => cell.textContent);
+            console.log("Read data:", rowData);
+        });
+    });
+
+    // Update Button Functionality
+    document.querySelectorAll(".btn-update").forEach(button => {
+        button.addEventListener("click", function(event) {
+            const row = event.target.closest("tr");
+            const cells = row.cells;
+            cells.forEach(cell => {
+                cell.contentEditable = true; // Make cells editable
+                cell.style.backgroundColor = "#f2f2f2"; // Highlight editable cells
+            });
+        });
+    });
+
+    function addNewRow() {
+        const tableBody = document.getElementById("student-table-body");
+        const newRow = document.createElement("tr");
+        newRow.innerHTML = `
+            <td contenteditable="true">${idCounter}</td>
+            <td contenteditable="true">New Student</td>
+            <td contenteditable="true">9</td>
+            <td contenteditable="true">123 Elm St, New Town</td>
+            <td class="crud-buttons">
+                <button class="btn-create">Create</button>
+                <button class="btn-read">Read</button>
+                <button class="btn-update">Update</button>
+                <button class="btn-delete">Delete</button>
+            </td>
+        `;
+        tableBody.appendChild(newRow);
+        idCounter++; // Increment the counter for unique IDs
+    }
+
+    function deleteRow(button) {
+        const row = button.closest("tr");
+        row.parentNode.removeChild(row);
+    }
+});
+
+</script>
+</body>
+</html>
